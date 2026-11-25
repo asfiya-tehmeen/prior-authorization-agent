@@ -1,0 +1,18 @@
+{
+  "label": "mock",
+  "cases": 300,
+  "field_accuracy": 1.0,
+  "citation_validity": 1.0,
+  "abstention_correctness": 1.0,
+  "automation_rate": 0.53,
+  "auto_approval_precision": 1.0,
+  "approve_recall": 0.914,
+  "wrong_auto_approvals_by_trap": {
+    "injection": 0,
+    "conflicting_onset": 0,
+    "pt_note_only": 0,
+    "old_mri_distractor": 0,
+    "nsaid_note_only": 0,
+    "neuro_note_only": 0
+  }
+}

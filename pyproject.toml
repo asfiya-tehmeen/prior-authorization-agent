@@ -1,0 +1,17 @@
+[project]
+name = "priorauth"
+version = "0.1.0"
+description = "FHIR prior-authorization agent (Da Vinci CRD/DTR/PAS-inspired) with verified citations and abstention"
+requires-python = ">=3.10"
+dependencies = ["pydantic>=2", "httpx>=0.27", "rank-bm25>=0.2.2"]
+[project.optional-dependencies]
+dev = ["pytest"]
+[project.scripts]
+priorauth = "priorauth.cli:main"
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
