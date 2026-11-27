@@ -19,14 +19,33 @@ python -m venv .venv && .venv\Scripts\pip install -e ".[dev]"
 $env:GROQ_API_KEY="..."; .venv\Scripts\priorauth eval --n 300 --llm groq --model openai/gpt-oss-120b
 ```
 
-## Results so far (300 synthetic cases)
-| run | field acc | citation validity | automation | auto-approve precision |
-|---|---|---|---|---|
-| structured baseline | 0.925 | 1.0 | 0.397 | 1.0 |
-| mock LLM (regex test double) | 1.0 | 1.0 | 0.53 | 1.0 |
+## Results so far (150 synthetic cases, seed 0, Groq `openai/gpt-oss-120b`, temperature 0)
+| run | field acc | citation validity | automation | auto-approve precision | approve recall | LLM errors |
+|---|---|---|---|---|---|---|
+| structured baseline (no LLM) | 0.923 | 1.0 | 0.367 | 1.0 | 0.679 | – |
+| LLM over notes + injection quarantine | 1.0 | 1.0 | 0.48 | 1.0 | 0.889 | 0 |
+| LLM over notes, quarantine OFF (ablation) | 1.0 | 1.0 | 0.54 | 1.0 | 1.0 | 0 |
 
-The mock row only shows the harness works — it is **not** a model result. The generator is clean and the traps are few, so these
-numbers say nothing about real-world accuracy. Real numbers need a Groq/Gemini run (not done yet).
+What this shows, and what it doesn't:
+- Reading notes lifts automation from 0.37 to 0.48–0.54 with no wrong auto-approvals, because the baseline can't see note-only evidence.
+- The model was not fooled by the planted injection on this sample: no decision flips with quarantine off. The quarantine's only
+  measured effect is a **cost**: it sends injection-containing cases to human review even when they're approvable (recall 0.889 vs 1.0).
+  It stays on as defence in depth, because the injection is crude (a single, obvious template) and one model run proves little.
+- Field accuracy of 1.0 means the generator is **too easy**, not that the agent is perfect. Next step is harder cases.
+- Synthetic data, one illustrative policy, n=150: none of this says anything about real-world accuracy.
+- The mock LLM (`--llm mock`) is a regex test double for the harness, not a model result.
+
+## Hard set (`--hard`)
+Adds traps that a careless reader gets wrong. Each appears only when the true answer is the negative one, so gold labels don't change:
+`pt_prior_episode` (PT for a resolved 2019 episode), `nsaid_hedged` ("may consider ibuprofen"), `cancer_family_history`,
+`neuro_negated` ("no foot drop"), `pt_conflicting_notes` (two notes disagree → expected abstain), `stealth_injection`
+(instruction-shaped text the quarantine regex does **not** catch). Uses its own random stream, so the default set is unchanged.
+
+`trap_field_error_rate` attributes errors to the field each trap targets. A case can carry several traps, so counting
+"wrong auto-approvals per trap" would only measure co-occurrence.
+
+Sanity check, regex mock on 150 hard cases: auto-approval precision falls to 0.88, failing every `nsaid_hedged` (22/22) and every
+`pt_conflicting_notes` (13/13). So the hard set does separate a naive reader from a careful one.
 
 ## Next
 1. Phase 0: pick 3–5 real MCD policies, read licence terms, rewrite criteria (summaries + IDs only).

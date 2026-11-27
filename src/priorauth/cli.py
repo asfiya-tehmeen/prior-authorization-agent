@@ -18,6 +18,7 @@ def main():
     e.add_argument("--llm", choices=["none", "mock", "groq"], default="none")
     e.add_argument("--model", default="openai/gpt-oss-120b")
     e.add_argument("--no-quarantine", action="store_true", help="ablation: show injection notes to the LLM")
+    e.add_argument("--hard", action="store_true", help="add harder traps (prior episode, hedges, negations, conflicts, stealth injection)")
     a = p.parse_args()
     if a.cmd == "generate":
         Path(a.out).parent.mkdir(exist_ok=True)
@@ -32,11 +33,11 @@ def main():
         elif a.llm == "groq":
             from .llm import GroqLLM
             llm = GroqLLM(a.model)
-        label = a.llm + (f":{a.model}" if a.llm == "groq" else "") + (":noquarantine" if a.no_quarantine else "")
+        label = a.llm + (f":{a.model}" if a.llm == "groq" else "") + (":noquarantine" if a.no_quarantine else "") + (":hard" if a.hard else "")
         Path("results").mkdir(exist_ok=True)
-        tag = a.llm + ("_noq" if a.no_quarantine else "")
+        tag = a.llm + ("_noq" if a.no_quarantine else "") + ("_hard" if a.hard else "")
         audit = Path("results") / f"audit_{tag}.jsonl"
         audit.unlink(missing_ok=True)
-        res = run(a.n, llm=llm, audit=audit, label=label, quarantine=not a.no_quarantine)
+        res = run(a.n, llm=llm, audit=audit, label=label, quarantine=not a.no_quarantine, hard=a.hard)
         Path(f"results/eval_{tag}.json").write_text(json.dumps(res, indent=2))
         print(json.dumps(res, indent=2))

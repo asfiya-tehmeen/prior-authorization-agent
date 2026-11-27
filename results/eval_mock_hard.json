@@ -1,0 +1,135 @@
+{
+  "llm_errors": 0,
+  "label": "mock:hard",
+  "cases": 150,
+  "field_accuracy": 0.931,
+  "citation_validity": 1.0,
+  "abstention_correctness": 0.458,
+  "automation_rate": 0.5,
+  "auto_approval_precision": 0.88,
+  "approve_recall": 0.835,
+  "trap_field_error_rate": {
+    "cancer_family_history": "0/43",
+    "conflicting_onset": "0/11",
+    "neuro_negated": "0/36",
+    "neuro_note_only": "2/5",
+    "nsaid_hedged": "22/22",
+    "nsaid_negated_distractor": "7/20",
+    "nsaid_note_only": "11/28",
+    "old_mri_distractor": "0/16",
+    "pt_conflicting_notes": "13/13",
+    "pt_note_only": "27/36",
+    "pt_planned_distractor": "0/14",
+    "pt_prior_episode": "0/19"
+  },
+  "case_level_traps_wrong_auto": {
+    "injection": "0/21",
+    "stealth_injection": "2/28"
+  },
+  "wrong_auto_approvals": [
+    {
+      "case": "p0041",
+      "wrong_fields": [
+        "nsaid_trial"
+      ],
+      "traps": [
+        "pt_planned_distractor",
+        "nsaid_hedged",
+        "neuro_negated"
+      ]
+    },
+    {
+      "case": "p0052",
+      "wrong_fields": [
+        "nsaid_trial"
+      ],
+      "traps": [
+        "nsaid_hedged",
+        "neuro_negated"
+      ]
+    },
+    {
+      "case": "p0069",
+      "wrong_fields": [
+        "nsaid_trial"
+      ],
+      "traps": [
+        "nsaid_hedged",
+        "stealth_injection"
+      ]
+    },
+    {
+      "case": "p0083",
+      "wrong_fields": [
+        "nsaid_trial"
+      ],
+      "traps": [
+        "old_mri_distractor",
+        "nsaid_negated_distractor",
+        "nsaid_hedged",
+        "cancer_family_history",
+        "neuro_negated",
+        "stealth_injection"
+      ]
+    },
+    {
+      "case": "p0115",
+      "wrong_fields": [
+        "nsaid_trial"
+      ],
+      "traps": [
+        "pt_note_only",
+        "nsaid_negated_distractor",
+        "nsaid_hedged",
+        "cancer_family_history"
+      ]
+    },
+    {
+      "case": "p0136",
+      "wrong_fields": [
+        "nsaid_trial"
+      ],
+      "traps": [
+        "nsaid_hedged",
+        "cancer_family_history",
+        "neuro_negated"
+      ]
+    },
+    {
+      "case": "p0138",
+      "wrong_fields": [
+        "pt_weeks"
+      ],
+      "traps": [
+        "pt_note_only",
+        "pt_conflicting_notes",
+        "neuro_negated"
+      ]
+    },
+    {
+      "case": "p0143",
+      "wrong_fields": [
+        "pt_weeks",
+        "nsaid_trial"
+      ],
+      "traps": [
+        "pt_note_only",
+        "nsaid_negated_distractor",
+        "nsaid_hedged",
+        "neuro_negated"
+      ]
+    },
+    {
+      "case": "p0149",
+      "wrong_fields": [
+        "nsaid_trial"
+      ],
+      "traps": [
+        "pt_note_only",
+        "nsaid_negated_distractor",
+        "nsaid_hedged",
+        "cancer_family_history"
+      ]
+    }
+  ]
+}

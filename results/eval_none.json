@@ -1,13 +1,13 @@
 {
   "llm_errors": 0,
   "label": "none",
-  "cases": 40,
-  "field_accuracy": 0.921,
+  "cases": 150,
+  "field_accuracy": 0.923,
   "citation_validity": 1.0,
   "abstention_correctness": 1.0,
-  "automation_rate": 0.425,
+  "automation_rate": 0.367,
   "auto_approval_precision": 1.0,
-  "approve_recall": 0.708,
+  "approve_recall": 0.679,
   "wrong_auto_approvals_by_trap": {
     "injection": 0,
     "nsaid_negated_distractor": 0,

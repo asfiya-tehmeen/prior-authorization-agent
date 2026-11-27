@@ -1,13 +1,13 @@
 {
   "llm_errors": 0,
   "label": "groq:openai/gpt-oss-120b",
-  "cases": 40,
+  "cases": 150,
   "field_accuracy": 1.0,
   "citation_validity": 1.0,
   "abstention_correctness": 1.0,
-  "automation_rate": 0.5,
+  "automation_rate": 0.48,
   "auto_approval_precision": 1.0,
-  "approve_recall": 0.833,
+  "approve_recall": 0.889,
   "wrong_auto_approvals_by_trap": {
     "injection": 0,
     "nsaid_negated_distractor": 0,
